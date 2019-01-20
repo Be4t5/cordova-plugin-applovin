@@ -70,7 +70,11 @@ public class AppLovinPlugin extends CordovaPlugin {
     } else if (action.equals("showInterstitialAd")) {
       result = showInterstitialAd(callbackContext);
 
-    } else if (Actions.SHOW_VIDEO.equals(action)) {
+    } 
+else if (action.equals("isAndroidTv")) {
+      result = isAndroidTv(callbackContext);
+
+    }else if (Actions.SHOW_VIDEO.equals(action)) {
 			result = showVideoAd(callbackContext);
 
 		} else if (Actions.TRACK_EVENT.equals(action)) {
@@ -88,6 +92,24 @@ public class AppLovinPlugin extends CordovaPlugin {
 		}
 
 		return true;
+	}
+	
+	private PluginResult isAndroidTv(final CallbackContext callbackContext) {
+		cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+			UiModeManager uiModeManager = (UiModeManager) cordova.getActivity().getApplicationContext().getSystemService(UI_MODE_SERVICE);
+			if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION) {
+			  callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, true));
+			} else {
+			  callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, false));
+
+			}
+
+			}
+		});
+
+		return null;
 	}
 
 	private PluginResult isReady(final CallbackContext callbackContext) {
