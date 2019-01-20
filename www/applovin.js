@@ -40,4 +40,4 @@ exports.showInterstitialAd = showInterstitialAd;
 exports.trackEvent = trackEvent;
 //# sourceMappingURL=applovin.js.map
 
-});
+
