@@ -26,6 +26,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.applovin.adview.AppLovinInterstitialAd;
+import com.applovin.adview.AppLovinInterstitialAdDialog;
+import com.applovin.sdk.AppLovinAdSize;
 import com.applovin.sdk.AppLovinSdk;
 import com.applovin.sdk.AppLovinAd;
 import com.applovin.sdk.AppLovinAdDisplayListener;
@@ -40,6 +43,7 @@ import com.applovin.sdk.AppLovinEventTypes;
 public class AppLovinPlugin extends CordovaPlugin {
 	private static final String LOG_TAG = "AppLovinPlugin";
 	private AppLovinIncentivizedInterstitial myIncent = null;
+  private AppLovinAd loadedAd;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -59,7 +63,14 @@ public class AppLovinPlugin extends CordovaPlugin {
 		} else if (Actions.LOAD_VIDEO.equals(action)) {
 			result = loadVideoAd(callbackContext);
 
-		} else if (Actions.SHOW_VIDEO.equals(action)) {
+		}
+    else if (action.equals("loadInterstitialAd")) {
+      result = loadInterstitialAd(callbackContext);
+
+    } else if (action.equals("showInterstitialAd")) {
+      result = showInterstitialAd(callbackContext);
+
+    } else if (Actions.SHOW_VIDEO.equals(action)) {
 			result = showVideoAd(callbackContext);
 
 		} else if (Actions.TRACK_EVENT.equals(action)) {
@@ -99,13 +110,45 @@ public class AppLovinPlugin extends CordovaPlugin {
 				_loadVideoAd();
 			}
 		});
+
 		callbackContext.success();
 
 		return null;
 	}
 
+  private PluginResult loadInterstitialAd(final CallbackContext callbackContext) {
+
+    AppLovinSdk.getInstance(cordova.getActivity().getApplicationContext()).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
+    {
+      @Override
+      public void adReceived(AppLovinAd ad)
+      {
+        loadedAd = ad;
+      }
+
+      @Override
+      public void failedToReceiveAd(int errorCode)
+      {
+        // Look at AppLovinErrorCodes.java for list of error codes.
+      }
+    });
+    callbackContext.success();
+
+    return null;
+  }
+
+  private PluginResult showInterstitialAd(final CallbackContext callbackContext) {
+
+    AppLovinInterstitialAdDialog interstitialAd = AppLovinInterstitialAd.create( AppLovinSdk.getInstance(cordova.getActivity().getApplicationContext()), cordova.getActivity().getApplicationContext() );
+    interstitialAd.showAndRender( loadedAd );
+    callbackContext.success();
+
+    return null;
+  }
+
 	private void _loadVideoAd() {
-		Log.d(LOG_TAG, "_loadVideoAd");
+
+    Log.d(LOG_TAG, "_loadVideoAd");
 		myIncent = AppLovinIncentivizedInterstitial.create(cordova.getActivity().getApplicationContext());
 		Log.d(LOG_TAG, "AppLovinIncentivizedInterstitial.create");
 		myIncent.preload(new AppLovinAdLoadListener() {
