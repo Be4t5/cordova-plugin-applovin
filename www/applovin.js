@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-applovin.applovin", function(require, exports, module) {
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -15,9 +16,16 @@ function isReady(successCallback, failureCallback) {
 function loadVideoAd(successCallback, failureCallback) {
   exec(successCallback, failureCallback, PLUGIN, 'loadVideoAd', []);
 }
+function loadInterstitialAd(successCallback, failureCallback) {
+  exec(successCallback, failureCallback, PLUGIN, 'loadInterstitialAd', []);
+}
 
 function showVideoAd(successCallback, failureCallback) {
   exec(successCallback, failureCallback, PLUGIN, 'showVideoAd', []);
+}
+
+function showInterstitialAd(successCallback, failureCallback) {
+  exec(successCallback, failureCallback, PLUGIN, 'showInterstitialAd', []);
 }
 
 function trackEvent(event, params, successCallback, failureCallback) {
@@ -27,5 +35,9 @@ function trackEvent(event, params, successCallback, failureCallback) {
 exports.isReady = isReady;
 exports.loadVideoAd = loadVideoAd;
 exports.showVideoAd = showVideoAd;
+exports.loadInterstitialAd = loadInterstitialAd;
+exports.showInterstitialAd = showInterstitialAd;
 exports.trackEvent = trackEvent;
 //# sourceMappingURL=applovin.js.map
+
+});
