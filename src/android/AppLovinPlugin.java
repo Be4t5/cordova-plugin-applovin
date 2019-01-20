@@ -18,6 +18,8 @@ import org.json.JSONException;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.util.Log;
+import android.app.UiModeManager;
+import android.content.res.Configuration;
 
 import android.util.Log;
 import android.view.View;
