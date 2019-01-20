@@ -42,6 +42,8 @@ import com.applovin.sdk.AppLovinEventParameters;
 import com.applovin.sdk.AppLovinEventService;
 import com.applovin.sdk.AppLovinEventTypes;
 
+import static android.content.Context.UI_MODE_SERVICE;
+
 public class AppLovinPlugin extends CordovaPlugin {
 	private static final String LOG_TAG = "AppLovinPlugin";
 	private AppLovinIncentivizedInterstitial myIncent = null;
