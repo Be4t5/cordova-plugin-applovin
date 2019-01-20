@@ -32,7 +32,12 @@ function trackEvent(event, params, successCallback, failureCallback) {
   exec(successCallback, failureCallback, PLUGIN, 'trackEvent', [event, params]);
 }
 
+function isAndroidTv(successCallback, failureCallback) {
+  exec(successCallback, failureCallback, PLUGIN, 'isAndroidTv', []);
+}
+
 exports.isReady = isReady;
+exports.isAndroidTv = isAndroidTv;
 exports.loadVideoAd = loadVideoAd;
 exports.showVideoAd = showVideoAd;
 exports.loadInterstitialAd = loadInterstitialAd;
